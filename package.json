@@ -2,7 +2,7 @@
   "name": "d3-react",
   "version": "0.1.0",
   "private": false,
-  "homepage":"./build/index.html",
+  "homepage":"https://sambitsatpathy.github.io/VelocityChart/build/",
   "devDependencies": {
     "react-scripts": "0.8.4"
   },
