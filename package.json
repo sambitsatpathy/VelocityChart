@@ -2,6 +2,7 @@
   "name": "d3-react",
   "version": "0.1.0",
   "private": false,
+  "homepage":"./build/index.html",
   "devDependencies": {
     "react-scripts": "0.8.4"
   },
