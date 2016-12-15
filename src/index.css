@@ -3,3 +3,35 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+.line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2px;
+  opacity: 0.3;
+}
+.App{
+  display: flex;
+  justify-content: space-around;
+}
+
+.axis {
+  shape-rendering: crispEdges;
+}
+
+.x.axis line {
+  stroke: #fff;
+}
+
+.x.axis .minor {
+  stroke-opacity: .5;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.y.axis line,
+.y.axis path {
+  fill: none;
+  stroke: #000;
+}

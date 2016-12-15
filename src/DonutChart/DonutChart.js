@@ -1,11 +1,10 @@
 import React,{ PropTypes }from 'react';
 import * as d3 from 'd3';
-const DonutChart = ({maxValue,plotFor,data})=>{
+const DonutChart = ({maxValue,plotFor,data,width})=>{
   const  colour={
     max:'white',
     velocity:'salmon'
-  },
-  width=128;
+  };
 
   const parseForSummaryDonut = (range, key, max) => {
     let dataObj = {};
@@ -23,8 +22,28 @@ const DonutChart = ({maxValue,plotFor,data})=>{
     })
     return finalData;
   };
+  const formatdata = (data)=>{
+    let dispVal = data.toFixed(0);
+    //Adding M/Ks
+    if (data >= 1000 && data < 1000000) {
+      data /= 1000;
 
+      if ((data.toFixed(1) * 10) === (data.toFixed(0) * 10)) {
+        dispVal = data.toFixed(0) + ' K';
+      } else {
+        dispVal = data.toFixed(1) + ' K';
+      }
+    } else if (data >= 1000000) {
+      data /= 1000000;
 
+      if ((data.toFixed(2) * 100) === (data.toFixed(0) * 100)) {
+        dispVal = data.toFixed(0) + ' M';
+      } else {
+        dispVal = data.toFixed(2) + ' M';
+      }
+    }
+    return dispVal;
+  };
   const createDonutChart = (radiusVal) => {
     let radius = radiusVal / 2.3;
     let miniarc = d3.arc().outerRadius(radius).innerRadius(radius - 10).cornerRadius(10),
@@ -41,29 +60,9 @@ const DonutChart = ({maxValue,plotFor,data})=>{
         totalValue = d.Value;
       }
     });
-    let dispTotal = totalValue.toFixed(0);
-    //Adding M/Ks
-    if (totalValue >= 10000 && totalValue < 1000000) {
-      totalValue /= 1000;
-
-      if ((totalValue.toFixed(1) * 10) === (totalValue.toFixed(0) * 10)) {
-        dispTotal = totalValue.toFixed(0) + ' K';
-      } else {
-        dispTotal = totalValue.toFixed(1) + ' K';
-      }
-    } else if (totalValue >= 1000000) {
-      totalValue /= 1000000;
-
-      if ((totalValue.toFixed(2) * 100) === (totalValue.toFixed(0) * 100)) {
-        dispTotal = totalValue.toFixed(0) + ' M';
-      } else {
-        dispTotal = totalValue.toFixed(2) + ' M';
-      }
-    }
-    ////END
-    returnValue.push(<text key="-3" textAnchor="middle" y="-10" style={{"fontSize": "25px","fill": "#838282", "fontWeight": "100"}}>{dispTotal}</text>);
-    returnValue.push(<text key="-2" textAnchor="middle" y="13" style={{"fontSize": "11px", "fill": "#c3c8cf", "fontWeight": "200"}}>Orders</text>);
-    returnValue.push(<text key="-1" textAnchor="middle" y="25" style={{"fontSize": "11px", "fill": "#c3c8cf", "fontWeight": "200"}}>Per Second</text>);
+    returnValue.push(<text key="-3" textAnchor="middle" x="-15" y="-10" style={{"fontSize": "20px","fill": "#838282"}}>{formatdata(totalValue)}</text>);
+    returnValue.push(<text key="-2" transform="rotate(45)" textAnchor="middle" y="10" x="5" style={{"fontSize": "36px", "fill": "#c3c8cf"}}>|</text>);
+    returnValue.push(<text key="-1" textAnchor="middle" x="20" y="20" style={{"fontSize": "15px", "fill": "#c3c8cf"}}>{formatdata(maxValue)}</text>);
     if (totalValue !== 0) {
 
       minipie(data).forEach((e, i) => {
@@ -79,11 +78,11 @@ const DonutChart = ({maxValue,plotFor,data})=>{
   };
   return (
     <div className='ChartContainer'>
-    <svg width={width} height={width}>
-    <g transform={"translate("+width/2+","+width/2+")"}>
-    {createDonutChart(width)}
-    </g>
-    </svg>
+      <svg width={width} height={width}>
+        <g transform={"translate("+width/2+","+width/2+")"}>
+        {createDonutChart(width)}
+        </g>
+      </svg>
     </div>
   );
 }
