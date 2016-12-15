@@ -9,7 +9,7 @@ const DonutChart = ({maxValue,plotFor,data})=>{
 
   const parseForSummaryDonut = (range, key, max) => {
     let dataObj = {};
-    dataObj[key] = 0;
+    dataObj[key] = 0.001;
     dataObj.max = max;
     dataObj[key] += +range[key];
     let finalData = Object.keys(dataObj).map(function(d) {
@@ -34,7 +34,6 @@ const DonutChart = ({maxValue,plotFor,data})=>{
     }),
     totalValue = 0,
     returnValue = [];
-
     data = parseForSummaryDonut(data, plotFor, maxValue);
     data.forEach(function(d) {
       d.Value = +d.Value;
@@ -42,7 +41,6 @@ const DonutChart = ({maxValue,plotFor,data})=>{
         totalValue = d.Value;
       }
     });
-
     let dispTotal = totalValue.toFixed(0);
     //Adding M/Ks
     if (totalValue >= 10000 && totalValue < 1000000) {
