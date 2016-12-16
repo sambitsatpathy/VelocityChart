@@ -11,14 +11,14 @@ export default class App extends Component {
     }
     setInterval(()=>{this.getData()},1500);
   }
-  
+
   async getData(){
     let {velocity} = await request('data/sampleData.json'),
         {history} = this.state;
-    history.push(velocity);
-    if(history.length>10){
-      history.shift();
-    }
+    // history.push(velocity);
+    // if(history.length>10){
+    //   history.shift();
+    // }
     this.setState({
       velocity,history
     });
@@ -31,7 +31,9 @@ export default class App extends Component {
     return (
       <div className="App">
         <DonutChart maxValue={maxValue} width={height} plotFor="velocity" data={{velocity:this.state.velocity}}/>
-        <LineChart maxValue={maxValue} width={width-height} height={height} data={this.state.history}/>
+        {
+          // <LineChart maxValue={maxValue} width={width-height} height={height} data={this.state.history}/>
+        }
       </div>
     );
   }
